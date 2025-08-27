@@ -1,0 +1,525 @@
+:root {
+  --text: white;
+  --background: rgb(0, 0, 0);
+  --foreground: rgba(68, 68, 68, 0.4);
+  --icons: rgb(255, 235, 0);
+  font-size: 20px;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  background-color: var(--background);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 100vh;
+}
+#maincontainer{
+  display: none;
+  display: block;
+  /* display:none   -- for making the main container invisible */
+}
+.main {
+
+  background-color: var(--foreground);
+  min-width: 50%;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid var(--icons);
+  border-radius: 10px;
+}
+
+.holder {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.menu {
+  background-color: var(--background);
+  padding: 10px 60px;
+  max-width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+.icon {
+  color: var(--icons);
+  font-size: 25px;
+  cursor: pointer;
+}
+.icon:hover {
+  color: #00ffff;
+}
+/* color when an icon is pressed */
+.clicked {
+  /* color:darkgoldenrod; */
+}
+.list {
+  width: 100%;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+
+}
+.items {
+  padding: 0px;
+}
+li {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  border:1px solid var(--text);
+  width: 600px;
+  background-color: var(--background);
+  color:var(--text);
+  height: 30px;
+  padding:8px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  
+}
+.checkbox{
+  display: none;
+}
+
+.custom_checkbox{
+  background-color: var(--text);
+  padding:2px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  border: 2px solid var(--icons);
+
+}
+.check_toggle{
+  color:green;
+  font-size: large;
+}
+/* use toggle when checkbox is checked */
+.item_price{
+  color:green;
+}
+.update{
+  background:none;
+  border:none;
+  color:lightblue;
+  font-size: 15px;
+  cursor:pointer;
+}
+.update:hover{
+  color:blue;
+}
+.delete{
+  background: none;
+  border: none;
+  color:red;
+  font-size: 15px;
+  cursor:pointer;
+}
+.delete:hover{
+  color:darkred;
+}
+.add{
+  position: fixed;
+  bottom: 0;
+  margin:20px;
+  color:var(--text);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 18px;
+
+}
+.total:hover{
+  cursor:pointer;
+  background-color:var(--background);
+}
+.fa-add{
+  position:fixed;
+  right:0;
+  margin-right: 500px;
+  font-size: 30px;
+  border:1px solid black;
+  color:green;
+  background-color: var(--text);
+  border-radius: 49%;
+  height: 30px;
+  padding:5px;
+  padding-bottom:6px;
+  
+}
+.fa-add:hover{
+  background-color: green;
+  color:var(--text);
+  cursor: pointer;
+}
+
+
+@media (max-width: 600px) {
+  .main {
+    min-width: 100%;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  .menu {
+    margin-top: 5px;
+    width: 100%;
+    gap: 30px;
+  }
+  li{
+    max-width:400px;
+    border: 1px solid var(--icons);
+  }
+  .fa-add{
+    margin-right: 25px;
+  }
+
+}
+
+
+/* add and update modal style */
+
+
+
+#addmodal{
+  display: none; /* make display to block to make visible*/
+  /* display:block; */
+  
+}
+#updatemodal{
+  display: none; /* make display to block to make visible*/
+/* display:block; */
+}
+
+.modal_1{
+  background-color: var(--foreground);
+  width:60%;
+  height: 90vh;
+  margin: 30px;
+  color: var(--text);
+  border:1px solid var(--icons);
+  border-radius: 10px;
+  padding:20px
+  
+  
+}
+.modal_close{
+  float: right;
+  /* margin-right:35px; */
+  margin-top:15px;
+  color:#F4674C;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+}
+.modal_close:hover{
+  color:#F02104;
+}
+/* .modal_title{
+  font-size: 2rem;
+  padding: 0px;
+  margin: 0px; */
+/* } */
+.modalcontent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+/* .itemName{
+  font-size: 1.5rem;
+} */
+#item,#price{
+  width:500px;
+  height:22px;
+  padding:10px;
+  background-color: var(--background);
+  color: var(--text);
+  border:1px solid var(--text);
+  border-radius: 5px;
+  font-size: 0.8rem;
+  caret-color: var(--icons);
+
+}
+#price{
+  width:450px;
+}
+#item:focus,#price:focus{
+  outline: none;
+  border:1px solid lime;
+}
+.modalcontent h3{
+  padding:0;
+  margin:15px;
+  margin-left: 0px;
+}
+.category_buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:20px;
+}
+.cbutton{
+  background-color: var(--background);
+  color: var(--text);
+  border:none;
+  border-radius: 20px;
+  width:30%;
+  height: 30px;
+  padding:15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:20px;
+  margin:10px;
+  color:bisque;
+  font-size: 0.7rem;
+  cursor: pointer;
+  
+}
+
+#food{
+  border:2px solid #4F00F5;
+
+}
+#crockery{
+  border:2px solid #622999;
+
+}
+#fashion{
+  border:2px solid #F50C94;
+
+}
+#moto{
+  border:2px solid #07C1F5;
+
+}
+#electronic{
+  border:2px solid #B0AAF3;
+
+}
+#pet{
+  border:2px solid #89A8F4;
+
+}
+#others{
+  border:2px solid #A37BF4;
+
+}
+
+.cbutton:hover{
+  color:var(--text);
+  border:2px solid #00F539 !important;
+}
+
+/* for setting the spin button to hide */
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+/* -------------------------------- */
+
+.numberContainer{
+  display: flex;
+  flex-direction: row;
+}
+.slideContainer{
+  width:50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding-left:5px;
+  padding-right: 5px;
+}
+.slideButton{
+  border: 2px solid var(--background);
+  background-color: goldenrod;
+  
+}
+.slideButton:hover{
+  cursor: pointer;
+  background-color: darkgoldenrod;
+}
+.submitButton{
+  display:flex;
+  justify-content: center;
+  padding-top:40px;
+}
+.actionbutton{
+  width: 100px;
+  height:4vh;
+  font-weight: bold;
+  border-radius: 15px;
+  border:2px solid var(--text);
+}
+#addbt{
+  background-color: #00F539;
+
+}
+#updatebt{
+  background-color: #07C1F5;
+}
+
+#addbt:hover{
+  background-color: green;
+}
+#updatebt:hover{
+  background-color:darkturquoise;
+}
+
+@media(max-width:600px){
+
+  .modal_1{
+      width: 100%;
+      height: 90vh;
+      margin:0px;
+      border:none;
+  }
+  #item,#price{
+      width:350px;
+      margin-left: 20px;
+  }
+  .modalcontent h3{
+  margin-left:20px;
+ }
+}
+
+
+
+/* ------------------------ */
+
+/* delete modal style */
+
+#deletemodal{
+  /* display:none;make display to none to make invisible and make display flex to make visible*/
+  display:none;
+  /* display:flex; */
+}
+
+.deletecontain{
+  width: 100%;
+  height: 90vh;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.modal_2{
+  background-color: var(--foreground);
+  color:var(--text);
+  width:30%;
+  height: 30vh;
+  border: 1px solid var(--icons);
+  border-radius: 10px;
+  padding:20px
+}
+.modal_close{
+  float: right;
+  /* margin-right:35px; */
+  margin-top:15px;
+  color:#F4674C;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+}
+.modal_close:hover{
+  color:#F02104;
+}
+.modal_2 h3{
+  margin-top:100px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Source Code Pro", monospace;
+  font-optical-sizing: auto;
+}
+.confirm{
+  margin-top:60px;
+  display: flex;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+  gap:70px;
+}
+.confirmbt{
+  width:80px;
+  height:30px;
+  font-size: 1rem;
+  font-weight: bolder;
+  padding: 2px;
+  border-radius: 10px;
+  border:2px solid black;
+  cursor: pointer;
+
+}
+.cancel{
+  background-color: red;
+}
+.proceed{
+  background-color: greenyellow;
+}
+.cancel:hover{
+  background-color: darkred;
+  color:var(--text);
+  
+}
+.proceed:hover{
+  background-color: darkgreen;
+  color:var(--text);
+  
+}
+@media(max-width:600px){
+  .modal_2{
+      width:90%;
+      
+  }
+}
+
+/* ------------------------------------ */
+
+/* animations  */
+
+/* blink animation for price field */
+
+.blink{
+  animation: blink-border 1s infinite;
+}
+@keyframes blink-border{
+  0%,25%{
+    border:2px solid red;
+  }
+  26%,50%{
+    
+      border:2px solid var(--text);
+    
+  }
+  51%,75%{
+    border:2px solid red;
+  }
+  76%,100%{
+    border:2px solid var(--text);
+  }
+}

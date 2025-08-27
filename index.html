@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart list</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <div class="main" id="maincontainer">
+      <div class="holder">
+        <div class="menu">
+          <i class="fa-solid fa-bowl-food icon clicked"></i>
+          <i class="fa-solid fa-utensils icon clicked"></i>
+          <i class="fa-solid fa-shirt icon clicked"></i>
+          <i class="fa-solid fa-car icon clicked"></i>
+          <i class="fa-regular fa-keyboard icon clicked"></i>
+          <i class="fa-solid fa-paw icon clicked"></i>
+          <i class="fa-solid fa-cart-shopping icon clicked"></i>
+        </div>
+      </div>
+      <div class="list">
+        <ul class="items">
+          <li>
+            <input type="checkbox" class="checkbox"id="item-1" />
+            <label for="item-1" class="custom_checkbox">
+              <i class="fa-solid fa-check"></i>
+            </label>
+            <label for="item-1" class="item_name">New item</label>
+            <label for="item-1" class="item_price"><span style="color: goldenrod;">₹</span> 2.4</label>
+            <button class="update"><i class="fa-solid fa-pen"></i></button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </li>
+
+          <li>
+            <input type="checkbox" class="checkbox" id="item-2" />
+            <label for="item-2" class="custom_checkbox">
+              <i class="fa-solid fa-check"></i>
+            </label>
+            <label for="item-2" class="item_name">New item</label>
+            <label for="item-2" class="item_price"><span style="color: goldenrod;">₹</span> 2.4</label>
+            <button class="update"><i class="fa-solid fa-pen"></i></button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </li>
+        </ul>
+      </div>
+      <div class="add" id="openmodal">
+        <div class="total">
+          Total <span style="color:red">:</span><span style="color: goldenrod;">₹ </span> <span style="color: green;">2.5</span>
+        </div>
+        <i class="fa-solid fa-add"></i>
+      </div>
+    </div>
+
+
+<!-- modal add -->
+
+
+    <div id="addmodal" class="modal_1">
+      <span id="close1" class="modal_close"
+        ><i class="fa-solid fa-circle-xmark"></i
+      ></span>
+      <!-- <h2 class="modal_title">Add Item</h2> -->
+      <div class="modalcontent">
+        <form>
+          <input type="text" class="itemadd" id="item" placeholder="Enter item name" />
+          <h3>Select category</h3>
+
+          <div class="category_buttons">
+            <button class="cbutton addbuttons" id="food" value="food" type="button">Food</button>
+            <button class="cbutton addbuttons" id="crockery" value="crockery" type="button">Crockery & Cutlery</button>
+            <button class="cbutton addbuttons" id="fashion" value="fashion" type="button">Fashion</button>
+            <button class="cbutton addbuttons" id="moto" value="moto" type="button">Automobile</button>
+            <button class="cbutton addbuttons" id="electronic" value="electronic" type="button">
+              Electronics & I.T
+            </button>
+            <button class="cbutton addbuttons" id="pet" value="pet" type="button">Pet Care</button>
+            <button class="cbutton addbuttons" id="others" value="others" type="button">Others</button>
+          </div>
+          <div class="numberContainer">
+            <input type="number" 
+            min="0" step="0.01" class="priceadd" id="price" placeholder="Enter the item price" />
+            <div class="slideContainer">
+              <button class="slideButton slideButtonAdd" value="up" type="button"><i class="fa-solid fa-angle-up"></i></button>
+              <button class="slideButton slideButtonAdd" value="down" type="button"><i class="fa-solid fa-angle-down"></i></button>
+            </div>
+            <br>
+          </div>
+          <div class="submitButton">
+            <input type="button" class="actionbutton" id="addbt" value="ADD" />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- --------------------------- -->
+
+
+    <!-- modal update -->
+
+    <div id="updatemodal" class="modal_1">
+      <span id="close2" class="modal_close"
+        ><i class="fa-solid fa-circle-xmark"></i
+      ></span>
+      <!-- <h2 class="modal_title">Add Item</h2> -->
+      <div class="modalcontent">
+        <form>
+          <input type="text" class="itemupdate" id="item" placeholder="Enter item name" />
+          <h3>Select category</h3>
+
+          <div class="category_buttons">
+            <button class="cbutton updatebuttons" id="food" type="button">Food</button>
+            <button class="cbutton updatebuttons" id="crockery" type="button">Crockery & Cutlery</button>
+            <button class="cbutton updatebuttons" id="fashion" type="button">Fashion</button>
+            <button class="cbutton updatebuttons" id="moto" type="button">Automobile</button>
+            <button class="cbutton updatebuttons" id="electronic" type="button">
+              Electronics & I.T
+            </button>
+            <button class="cbutton updatebuttons" id="pet" type="button">Pet Care</button>
+            <button class="cbutton updatebuttons" id="others" type="button">Others</button>
+          </div>
+          <div class="numberContainer">
+            <input type="number" 
+            min="0" step="0.01" class="priceupdate" id="price" placeholder="Enter the item price" />
+            <div class="slideContainer">
+              <button class="slideButton slideButtonUpdate" value="up" type="button"><i class="fa-solid fa-angle-up"></i></button>
+              <button class="slideButton slideButtonUpdate" value="down" type="button"><i class="fa-solid fa-angle-down"></i></button>
+            </div>
+            <br>
+          </div>
+          <div class="submitButton">
+            <input type="button" class="actionbutton" id="updatebt" value="UPDATE" />
+          </div>
+        </form>
+      </div>
+    </div>
+<!-- ---------------------------------------- -->
+
+<!-- delete modal -->
+ <div class="deletecontain" id="deletemodal">
+  <div class="modal_2" >
+    <i class="fa-solid fa-circle-xmark modal_close"></i>
+    <h3>Delete this item?</h3>
+    <div class="confirm">
+      <button class="cancel confirmbt"><i class="fa-solid fa-xmark"></i></button>
+      <button class="proceed confirmbt"><i class="fa-solid fa-check"></i></button>
+    </div>
+  </div>
+ </div>
+
+ <!-- ----------------------------------------- -->
+
+
+
+  </body>
+</html>
