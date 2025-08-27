@@ -52,9 +52,11 @@ let priceField = document.querySelector(".priceadd");
 let slideButtons = document.querySelectorAll(".slideButtonAdd");
 
 let itemname = "";
-let categoryname = "";
+let categoryname = null;
 let active = null;
 let itemPrice = 0;
+let temp;
+let itemlist = [];
 
 // to select categories
 for (let i = 0; i < categories.length; i++) {
@@ -67,15 +69,6 @@ for (let i = 0; i < categories.length; i++) {
     categoryname = active.value;
   });
 }
-
-addButton.addEventListener("click", () => {
-  // name of the item
-  itemname = itemField.value;
-
-  // price of the item
-  itemPrice = priceField.value;
-  alert(`${itemname},${categoryname},${itemPrice}`);
-});
 
 // setting the sliding buttons
 for (let i = 0; i < slideButtons.length; i++) {
@@ -90,34 +83,57 @@ for (let i = 0; i < slideButtons.length; i++) {
       newNumber = Number(newNumber);
       newNumber -= 0.01;
       if (Number(priceField.value) <= 0) {
-        blinkAnimation(priceField,"blink");
+        blinkAnimation(priceField, "blink");
       } else {
         priceField.value = Math.round(newNumber * 100) / 100;
       }
     }
   });
-};
+}
 
 //when arrowdown pressed after reaching 0
 
-priceField.addEventListener("keydown",(e)=>{
-  if(priceField.value<=0){
-    if(e.key==="ArrowDown"){
-      blinkAnimation(priceField,"blink");
+priceField.addEventListener("keydown", (e) => {
+  if (priceField.value <= 0) {
+    if (e.key === "ArrowDown") {
+      blinkAnimation(priceField, "blink");
     }
   }
 });
 
+// when add button clicked
 
+addButton.addEventListener("click", () => {
+  // name of the item verification
+  if (itemField.value.trim() === "") {
+    blinkAnimation(itemField, "blink");
+  }
 
+  // price of the item verification
+  if (priceField.value === "0" || priceField.value.trim() === "") {
+    blinkAnimation(priceField, "blink");
+  }
 
+  // for categoryname verification
+  if (categoryname === null) {
+    alert("Please select any category");
+  }
 
+  // push to array if all three verifications pass
+  // only store the value if all the three fields are filled
+  if (
+    itemField.value.trim() != "" &&
+    categoryname != null &&
+    priceField.value != "0" &&
+    priceField.value.trim() != ""
+  ) {
+    itemname = itemField.value;
+    itemPrice = priceField.value;
+    itemlist.push(new itemCreate(itemname, categoryname, itemPrice));
+  }
 
-
-
-
-
-
+  console.log(itemlist);
+});
 
 // -----------------------------------------------------------------------------MODAL ADD END---------------------------------------------------------------
 
@@ -125,9 +141,19 @@ priceField.addEventListener("keydown",(e)=>{
 
 // error animation - can be used for any errors with blinking borders
 
-function blinkAnimation(target,animation){
+function blinkAnimation(target, animation) {
   target.classList.add(animation);
-        let timeoutId = setTimeout(() => {
-          target.classList.remove(animation);
-        }, 1000);
+  let timeoutId = setTimeout(() => {
+    target.classList.remove(animation);
+  }, 1000);
+}
+
+// object creation
+
+class itemCreate {
+  constructor(name, category, price) {
+    this.name = name;
+    this.category = category;
+    this.price = price;
+  }
 }
