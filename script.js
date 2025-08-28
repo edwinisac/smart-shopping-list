@@ -18,7 +18,10 @@ let deleteModal = document.querySelector("#deletemodal");
 addbt.addEventListener("click", () => openmodal(main, addModal, "block"));
 
 // close button for add
-close[0].addEventListener("click", () => closemodal(addModal));
+close[0].addEventListener("click", () =>{
+  reset();
+  closemodal(addModal)});
+
 
 for (let i = 0; i < updatebt.length; i++) {
   updatebt[i].addEventListener("click", () =>
@@ -30,20 +33,23 @@ for (let i = 0; i < updatebt.length; i++) {
   );
 }
 // close button for update
-close[1].addEventListener("click", () => closemodal(updateModal));
+close[1].addEventListener("click", () => {closemodal(updateModal)});
 // close button for delete
-close[2].addEventListener("click", () => closemodal(deleteModal));
+close[2].addEventListener("click", () => {closemodal(deleteModal)});
 
+// function for showing a modal
 function openmodal(hidemodal, showmodal, type) {
   hidemodal.style.display = "none";
   showmodal.style.display = type;
 }
 
+// function for hiding a modal
 function closemodal(hidemodal) {
   main.style.display = "block";
   hidemodal.style.display = "none";
 }
 // -------------------------------------------------------------------------------------------------------------------------------------------------
+
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
 let itemField = document.querySelector(".itemadd");
 let addButton = document.querySelector("#addbt");
@@ -55,7 +61,6 @@ let itemname = "";
 let categoryname = null;
 let active = null;
 let itemPrice = 0;
-let temp;
 let itemlist = [];
 
 // to select categories
@@ -130,7 +135,14 @@ addButton.addEventListener("click", () => {
     itemname = itemField.value;
     itemPrice = priceField.value;
     itemlist.push(new itemCreate(itemname, categoryname, itemPrice));
+    // reset the fields only if all the details are submitted
+    reset();
   }
+
+  // resetting all values to default
+
+ 
+
 
   console.log(itemlist);
 });
@@ -156,4 +168,21 @@ class itemCreate {
     this.category = category;
     this.price = price;
   }
+}
+
+// function for resetting the add modal
+
+function reset(){
+  itemname="";
+  categoryname=null;
+  itemPrice=0;
+
+  itemField.value="";
+  priceField.value="";
+  if(active!=null){
+    active.style.backgroundColor="var(--background)";
+  }
+  active=null;
+  closemodal(addModal);
+
 }
