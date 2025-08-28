@@ -20,7 +20,8 @@ addbt.addEventListener("click", () => openmodal(main, addModal, "block"));
 // close button for add
 close[0].addEventListener("click", () =>{
   reset();
-  closemodal(addModal)});
+  // closemodal(addModal)
+  });
 
 
 for (let i = 0; i < updatebt.length; i++) {
@@ -37,18 +38,9 @@ close[1].addEventListener("click", () => {closemodal(updateModal)});
 // close button for delete
 close[2].addEventListener("click", () => {closemodal(deleteModal)});
 
-// function for showing a modal
-function openmodal(hidemodal, showmodal, type) {
-  hidemodal.style.display = "none";
-  showmodal.style.display = type;
-}
 
-// function for hiding a modal
-function closemodal(hidemodal) {
-  main.style.display = "block";
-  hidemodal.style.display = "none";
-}
-// -------------------------------------------------------------------------------------------------------------------------------------------------
+
+// #################################################################################################################################################
 
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
 let itemField = document.querySelector(".itemadd");
@@ -147,9 +139,40 @@ addButton.addEventListener("click", () => {
   console.log(itemlist);
 });
 
-// -----------------------------------------------------------------------------MODAL ADD END---------------------------------------------------------------
+//###########################################################################---- MODAL ADD END ---###############################################################
+
+// ---------------------------------------------------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+//###########################################################################----DISPLAYING ITEMS ON MAIN PAGE END ---###############################################################
+
+
+
 
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
+
+// function for showing a modal
+function openmodal(hidemodal, showmodal, type) {
+  hidemodal.style.display = "none";
+  showmodal.style.display = type;
+}
+
+// function for hiding a modal
+function closemodal(hidemodal) {
+  main.style.display = "block";
+  hidemodal.style.display = "none";
+
+}
 
 // error animation - can be used for any errors with blinking borders
 
