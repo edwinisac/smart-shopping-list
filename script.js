@@ -11,18 +11,27 @@ let close = document.querySelectorAll(".modal_close");
 let updateModal = document.querySelector("#updatemodal");
 let deleteModal = document.querySelector("#deletemodal");
 
-// ___________________
+// all items of add modal
+
+let itemField = document.querySelector(".itemadd");
+let addButton = document.querySelector("#addbt");
+let categories = document.querySelectorAll(".addbuttons");
+let priceField = document.querySelector(".priceadd");
+let slideButtons = document.querySelectorAll(".slideButtonAdd");
+
+// all items of main page
+
+let displayList = document.querySelector(".list");
 
 // -----------------------------------------------
 
 addbt.addEventListener("click", () => openmodal(main, addModal, "block"));
 
 // close button for add
-close[0].addEventListener("click", () =>{
+close[0].addEventListener("click", () => {
   reset();
   // closemodal(addModal)
-  });
-
+});
 
 for (let i = 0; i < updatebt.length; i++) {
   updatebt[i].addEventListener("click", () =>
@@ -34,26 +43,24 @@ for (let i = 0; i < updatebt.length; i++) {
   );
 }
 // close button for update
-close[1].addEventListener("click", () => {closemodal(updateModal)});
+close[1].addEventListener("click", () => {
+  closemodal(updateModal);
+});
 // close button for delete
-close[2].addEventListener("click", () => {closemodal(deleteModal)});
-
-
+close[2].addEventListener("click", () => {
+  closemodal(deleteModal);
+});
 
 // #################################################################################################################################################
 
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
-let itemField = document.querySelector(".itemadd");
-let addButton = document.querySelector("#addbt");
-let categories = document.querySelectorAll(".addbuttons");
-let priceField = document.querySelector(".priceadd");
-let slideButtons = document.querySelectorAll(".slideButtonAdd");
 
 let itemname = "";
 let categoryname = null;
 let active = null;
 let itemPrice = 0;
 let itemlist = [];
+let uniqueId=0;
 
 // to select categories
 for (let i = 0; i < categories.length; i++) {
@@ -131,31 +138,30 @@ addButton.addEventListener("click", () => {
     reset();
   }
 
-  // resetting all values to default
+// ----------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------
 
- 
+  // track of array length for unique ids
+  uniqueId=itemlist.length-1;
 
+  let li = document.createElement("li");
+  li.id = `product-${uniqueId}`;
+  li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${uniqueId}" />
+                  <label for="item-${uniqueId}" class="custom_checkbox">
+                  <i class="fa-solid fa-check"></i>
+                  </label>
+                  <label for="item-${uniqueId}" class="item_name">${itemlist[uniqueId].name}</label>
+                  <label for="item-${uniqueId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
+                  <button class="update" id="updateid-${uniqueId}"><i class="fa-solid fa-pen"></i></button>
+                  <button class="delete" id="deleteid-${uniqueId}"><i class="fa-solid fa-trash"></i></button>
+                  </li> `;
+  displayList.appendChild(li);
+
+// #################----DISPLAYING ITEMS ON MAIN PAGE END #######################
 
   console.log(itemlist);
 });
 
-//###########################################################################---- MODAL ADD END ---###############################################################
-
-// ---------------------------------------------------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-//###########################################################################----DISPLAYING ITEMS ON MAIN PAGE END ---###############################################################
-
+//###########################################################################---- ADD MODAL END ---###############################################################
 
 
 
@@ -171,7 +177,6 @@ function openmodal(hidemodal, showmodal, type) {
 function closemodal(hidemodal) {
   main.style.display = "block";
   hidemodal.style.display = "none";
-
 }
 
 // error animation - can be used for any errors with blinking borders
@@ -195,17 +200,16 @@ class itemCreate {
 
 // function for resetting the add modal
 
-function reset(){
-  itemname="";
-  categoryname=null;
-  itemPrice=0;
+function reset() {
+  itemname = "";
+  categoryname = null;
+  itemPrice = 0;
 
-  itemField.value="";
-  priceField.value="";
-  if(active!=null){
-    active.style.backgroundColor="var(--background)";
+  itemField.value = "";
+  priceField.value = "";
+  if (active != null) {
+    active.style.backgroundColor = "var(--background)";
   }
-  active=null;
+  active = null;
   closemodal(addModal);
-
 }
