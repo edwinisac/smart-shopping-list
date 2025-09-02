@@ -123,6 +123,12 @@ li {
 .item_name{
   flex: 1 1 auto; /* will grow/shrink to fill remaining space */
 }
+.item_name_check{
+  color: rgb(73, 71, 71);
+  text-decoration: line-through;
+  transition: color 0.2s ease;
+}
+
 .item_price{
   color:green;
   flex:0 1 auto;
@@ -542,3 +548,5 @@ input[type="number"] {
     border:2px solid var(--text);
   }
 }
+
+

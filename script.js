@@ -154,6 +154,25 @@ addButton.addEventListener("click", () => {
                   <button class="update" id="updateid-${uniqueId}"><i class="fa-solid fa-pen"></i></button>
                   <button class="delete" id="deleteid-${uniqueId}"><i class="fa-solid fa-trash"></i></button>
                   </li> `;
+  let checkbox=li.querySelector(".checkbox");
+  let customCheckbox=li.querySelector(".custom_checkbox");
+  let text=li.querySelector(".item_name");
+  checkbox.addEventListener("change",()=>{
+    if(checkbox.checked){
+      customCheckbox.classList.add("check_toggle");
+      // also pass a flag or status and modify the object
+      itemlist[uniqueId].status=true;
+      text.classList.add("item_name_check");
+    }
+    else{
+      customCheckbox.classList.remove("check_toggle");
+      itemlist[uniqueId].status=false;
+      text.classList.remove("item_name_check");
+
+
+    }
+  })
+
   displayList.appendChild(li);
 
 // #################----DISPLAYING ITEMS ON MAIN PAGE END #######################
@@ -195,6 +214,7 @@ class itemCreate {
     this.name = name;
     this.category = category;
     this.price = price;
+    this.status=false;
   }
 }
 
