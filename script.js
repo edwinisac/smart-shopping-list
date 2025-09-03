@@ -1,7 +1,7 @@
 // buttons for modal opening
 let addbt = document.querySelector(".fa-add");
-let updatebt = document.querySelectorAll(".update");
-let deletebt = document.querySelectorAll(".delete");
+// let updatebt = document.querySelectorAll(".update");
+// let deletebt = document.querySelectorAll(".delete");
 
 // all sections of webpage
 
@@ -33,15 +33,15 @@ close[0].addEventListener("click", () => {
   // closemodal(addModal)
 });
 
-for (let i = 0; i < updatebt.length; i++) {
-  updatebt[i].addEventListener("click", () =>
-    openmodal(main, updateModal, "block")
-  );
-  // since number of delete buttons are same as edit
-  deletebt[i].addEventListener("click", () =>
-    openmodal(main, deleteModal, "flex")
-  );
-}
+// for (let i = 0; i < updatebt.length; i++) {
+//   updatebt[i].addEventListener("click", () =>
+//     openmodal(main, updateModal, "block")
+//   );
+//   // since number of delete buttons are same as edit
+//   deletebt[i].addEventListener("click", () =>
+//     openmodal(main, deleteModal, "flex")
+//   );
+// }
 // close button for update
 close[1].addEventListener("click", () => {
   closemodal(updateModal);
@@ -60,7 +60,7 @@ let categoryname = null;
 let active = null;
 let itemPrice = 0;
 let itemlist = [];
-let uniqueId=0;
+let uniqueId = 0;
 
 // to select categories
 for (let i = 0; i < categories.length; i++) {
@@ -138,10 +138,10 @@ addButton.addEventListener("click", () => {
     reset();
   }
 
-// ----------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------
+  // ----------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------
 
   // track of array length for unique ids
-  uniqueId=itemlist.length-1;
+  uniqueId = itemlist.length - 1;
 
   let li = document.createElement("li");
   li.id = `product-${uniqueId}`;
@@ -151,36 +151,87 @@ addButton.addEventListener("click", () => {
                   </label>
                   <label for="item-${uniqueId}" class="item_name">${itemlist[uniqueId].name}</label>
                   <label for="item-${uniqueId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
-                  <button class="update" id="updateid-${uniqueId}"><i class="fa-solid fa-pen"></i></button>
-                  <button class="delete" id="deleteid-${uniqueId}"><i class="fa-solid fa-trash"></i></button>
-                  </li> `;
-  let checkbox=li.querySelector(".checkbox");
-  let customCheckbox=li.querySelector(".custom_checkbox");
-  let text=li.querySelector(".item_name");
-  checkbox.addEventListener("change",()=>{
-    if(checkbox.checked){
+                  <button class="update" id="updateid-${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
+                  <button class="delete" id="deleteid=${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
+
+                  // data-Id = uniqueID - to keep track of the id of the buttons to know which one is presses, can be accessed with dataset
+
+  // selecting things inside the list
+  let checkbox = li.querySelector(".checkbox");
+  let customCheckbox = li.querySelector(".custom_checkbox");
+  let text = li.querySelector(".item_name");
+  let updateModalOpen = li.querySelector(`.update`);
+
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
       customCheckbox.classList.add("check_toggle");
       // also pass a flag or status and modify the object
-      itemlist[uniqueId].status=true;
+      itemlist[uniqueId].status = true;
       text.classList.add("item_name_check");
-    }
-    else{
+    } else {
       customCheckbox.classList.remove("check_toggle");
-      itemlist[uniqueId].status=false;
+      itemlist[uniqueId].status = false;
       text.classList.remove("item_name_check");
-
-
     }
-  })
+  });
+  // to open update modal
+  updateModalOpen.addEventListener("click", (e) => {
+    openmodal(main, updateModal, "block");
+    let id=e.currentTarget.dataset.id;
+    console.log(id);
 
+
+    // let updateItemField=document.querySelector(".itemupdate");
+    // updateItemField.value=itemlist[uniqueId].name;
+    // setting up variables
+    // let updatedCategoryName=itemlist[uniqueId].category;
+    // let updateCategories=document.querySelectorAll(".updatebuttons");
+    // for(let i=0; i<updateCategories.length;i++){
+
+    //   // reset all the backgrounds first
+    //   updateCategories[i].style.backgroundColor="var(--background)";
+    //   if(updateCategories[i].value===updatedCategoryName){
+    //     updateCategories[i].style.backgroundColor="green";
+    //   }
+    // }
+
+
+
+
+  });
   displayList.appendChild(li);
 
-// #################----DISPLAYING ITEMS ON MAIN PAGE END #######################
+  // #################----DISPLAYING ITEMS ON MAIN PAGE END #######################
+
+  // ##############-----Update Modal-------------------------#####################
+
+
+
+
+
+
+
+//  selecting fields
+
+// let updateItemField=document.querySelector(".itemupdate");
+// let updateCategories=document.querySelectorAll(".updatebuttons");
+
+
+// prefexing current values
+// updateItemField.value=itemlist[uniqueId].name;
+// for(let i=0; i<updateCategories.length;i++){
+//   if(updateCategories[i].value===updatedCategoryName){
+//     updateCategories[i].style.backgroundColor="red";
+//   }
+// }
+
+// ###############-----Update Modal End-------------------------###################
 
   console.log(itemlist);
 });
 
 //###########################################################################---- ADD MODAL END ---###############################################################
+
 
 
 
@@ -214,7 +265,7 @@ class itemCreate {
     this.name = name;
     this.category = category;
     this.price = price;
-    this.status=false;
+    this.status = false;
   }
 }
 

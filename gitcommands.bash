@@ -8,10 +8,15 @@ git init                       # initialize Git
 git add .                      # stage all files
 git commit -m "Initial commit" # first snapshot
 
-# connect to GitHub (replace with your repo URL)
-git remote add origin https://github.com/yourusername/repo-name.git
+# connect to GitHub (replace with your repo URL "https")
+git remote add origin https://github.com/yourusername/repo-name.git        
+#or("ssh from starting")
+git remote add origin git@github.com:username/new-project.git
 git branch -M main             # rename default branch to main
 git push -u origin main        # upload code to GitHub
+
+# to switch from https to ssh (optional if not done at starting )
+git remote set-url origin git@github.com:username/new-project.git
 
 # -------------------------
 # 2. Everyday Workflow (make changes)
