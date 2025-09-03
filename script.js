@@ -154,7 +154,7 @@ addButton.addEventListener("click", () => {
                   <button class="update" id="updateid-${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
                   <button class="delete" id="deleteid=${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
 
-                  // data-Id = uniqueID - to keep track of the id of the buttons to know which one is presses, can be accessed with dataset
+  // data-Id = uniqueID - to keep track of the id of the buttons to know which one is presses, can be accessed with dataset
 
   // selecting things inside the list
   let checkbox = li.querySelector(".checkbox");
@@ -177,63 +177,55 @@ addButton.addEventListener("click", () => {
   // to open update modal
   updateModalOpen.addEventListener("click", (e) => {
     openmodal(main, updateModal, "block");
-    let id=e.currentTarget.dataset.id;
-    console.log(id);
+    let id = e.currentTarget.dataset.id;
+    // using dataset to confirm which update button is pressed
+
+    let updateItemField = document.querySelector(".itemupdate");
+    let updateCategory=document.querySelectorAll(".updatebuttons");
 
 
-    // let updateItemField=document.querySelector(".itemupdate");
-    // updateItemField.value=itemlist[uniqueId].name;
-    // setting up variables
-    // let updatedCategoryName=itemlist[uniqueId].category;
-    // let updateCategories=document.querySelectorAll(".updatebuttons");
-    // for(let i=0; i<updateCategories.length;i++){
+    updateItemField.value = itemlist[id].name;
 
-    //   // reset all the backgrounds first
-    //   updateCategories[i].style.backgroundColor="var(--background)";
-    //   if(updateCategories[i].value===updatedCategoryName){
-    //     updateCategories[i].style.backgroundColor="green";
-    //   }
-    // }
-
-
-
-
+    // for selecting the categories
+    for(let i=0; i<updateCategory.length; i++){
+      updateCategory[i].style.backgroundColor="var (--background)";
+      
+      if(updateCategory[i].value===itemlist[id].category){
+        updateCategory[i].style.backgroundColor="green";
+      }
+    }
   });
+
+
+
+
+
+
   displayList.appendChild(li);
 
   // #################----DISPLAYING ITEMS ON MAIN PAGE END #######################
 
   // ##############-----Update Modal-------------------------#####################
 
+  //  selecting fields
 
+  // let updateItemField=document.querySelector(".itemupdate");
+  // let updateCategories=document.querySelectorAll(".updatebuttons");
 
+  // prefexing current values
+  // updateItemField.value=itemlist[uniqueId].name;
+  // for(let i=0; i<updateCategories.length;i++){
+  //   if(updateCategories[i].value===updatedCategoryName){
+  //     updateCategories[i].style.backgroundColor="red";
+  //   }
+  // }
 
-
-
-
-//  selecting fields
-
-// let updateItemField=document.querySelector(".itemupdate");
-// let updateCategories=document.querySelectorAll(".updatebuttons");
-
-
-// prefexing current values
-// updateItemField.value=itemlist[uniqueId].name;
-// for(let i=0; i<updateCategories.length;i++){
-//   if(updateCategories[i].value===updatedCategoryName){
-//     updateCategories[i].style.backgroundColor="red";
-//   }
-// }
-
-// ###############-----Update Modal End-------------------------###################
+  // ###############-----Update Modal End-------------------------###################
 
   console.log(itemlist);
 });
 
 //###########################################################################---- ADD MODAL END ---###############################################################
-
-
-
 
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
 
