@@ -208,8 +208,7 @@ addButton.addEventListener("click", () => {
       updatePriceField.value=itemlist[id].price;
       // setting the slide buttons
 
-
-
+      categorySelection(id);
 
     });
 
@@ -225,13 +224,22 @@ addButton.addEventListener("click", () => {
 //###########################################################################---- ADD MODAL END ---###############################################################
 
 // #################################------------update Modal-----------#########################
-
+     
+// setting the slide buttons
 let slideButtonUpdate=document.querySelectorAll(".slideButtonUpdate");
 let priceFieldUpdate=document.querySelector(".priceupdate");
 slidebutton(slideButtonUpdate,priceFieldUpdate);
 
       // when arrow down pressed after reaching 0
       downpress(priceFieldUpdate);
+
+let uCategories=document.querySelectorAll(".updatebuttons");
+function categorySelection(currentId){
+  if(currentId!==null){
+    let uCategoryName=itemlist[currentId].category;
+    console.log(uCategoryName);
+  };
+}
 
 
 // #################################------------update Modal end-----------#########################
