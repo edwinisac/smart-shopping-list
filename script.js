@@ -50,7 +50,13 @@ close[2].addEventListener("click", () => {
 });
 
 // #################################################################################################################################################
-
+// variable declaration for update section
+let updateActive = null;
+let updatedCategoryName = null;
+let currentUpdateId = null;
+// global selectors for update modal
+let updateCategory = document.querySelectorAll(".updatebuttons");
+let updateItemField = document.querySelector(".itemupdate");
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
 
 let itemname = "";
@@ -75,7 +81,7 @@ for (let i = 0; i < categories.length; i++) {
 // setting the sliding buttons
 let priceField = document.querySelector(".priceadd");
 let slideButtons = document.querySelectorAll(".slideButtonAdd");
-slidebutton(slideButtons,priceField);
+slidebutton(slideButtons, priceField);
 
 // for (let i = 0; i < slideButtons.length; i++) {
 //   slideButtons[i].addEventListener("click", () => {
@@ -166,15 +172,15 @@ addButton.addEventListener("click", () => {
     let updateModalOpen = li.querySelector(`.update`);
 
     checkbox.addEventListener("change", (e) => {
-      let checkId=e.currentTarget.dataset.checkid;
+      let checkId = e.currentTarget.dataset.checkid;
       if (checkbox.checked) {
         customCheckbox.classList.add("check_toggle");
         // also pass a flag or status and modify the object
-        itemlist[checkId].status = true;    //checked
+        itemlist[checkId].status = true; //checked
         text.classList.add("item_name_check");
       } else {
         customCheckbox.classList.remove("check_toggle");
-        itemlist[checkId].status = false;    //not checked
+        itemlist[checkId].status = false; //not checked
         text.classList.remove("item_name_check");
       }
     });
@@ -187,36 +193,30 @@ addButton.addEventListener("click", () => {
       let id = e.currentTarget.dataset.id;
       // using dataset to confirm which update button is pressed will give the id saved to the current target button
 
-      let updateItemField = document.querySelector(".itemupdate");
-      let updateCategory = document.querySelectorAll(".updatebuttons");
-      let updatePriceField=document.querySelector(".priceupdate");
+      // let updateItemField = document.querySelector(".itemupdate");
+      // let updateCategory = document.querySelectorAll(".updatebuttons");      --declared globally
+      let updatePriceField = document.querySelector(".priceupdate");
 
+      // displaying product name
       updateItemField.value = itemlist[id].name;
 
-      // for selecting the categories
+      // for displaying the selected category
       for (let i = 0; i < updateCategory.length; i++) {
-
-        if (updateCategory[i].value !== itemlist[id].category) {
+        if (updateCategory[i].value === itemlist[id].category) {
+          updateCategory[i].style.backgroundColor = "green";
+          updateActive = updateCategory[i];
+          updatedCategoryName = updateCategory[i].value;
+        } else {
           updateCategory[i].style.backgroundColor = "var(--background)";
         }
-        else{
-          updateCategory[i].style.backgroundColor = "green";
-
-        }
       }
-
-      updatePriceField.value=itemlist[id].price;
-      // setting the slide buttons
-
-      categorySelection(id);
-
+      // displaying product price
+      updatePriceField.value = itemlist[id].price;
+      currentUpdateId = Number(id);
     });
 
     displayList.appendChild(li);
   }
-
-
-
 
   console.log(itemlist);
 });
@@ -224,26 +224,43 @@ addButton.addEventListener("click", () => {
 //###########################################################################---- ADD MODAL END ---###############################################################
 
 // #################################------------update Modal-----------#########################
-     
+
 // setting the slide buttons
-let slideButtonUpdate=document.querySelectorAll(".slideButtonUpdate");
-let priceFieldUpdate=document.querySelector(".priceupdate");
-slidebutton(slideButtonUpdate,priceFieldUpdate);
+let slideButtonUpdate = document.querySelectorAll(".slideButtonUpdate");
+let priceFieldUpdate = document.querySelector(".priceupdate");
+let updateButton = document.querySelector("#updatebt");
+slidebutton(slideButtonUpdate, priceFieldUpdate);
 
-      // when arrow down pressed after reaching 0
-      downpress(priceFieldUpdate);
-
-let uCategories=document.querySelectorAll(".updatebuttons");
-function categorySelection(currentId){
-  if(currentId!==null){
-    let uCategoryName=itemlist[currentId].category;
-    console.log(uCategoryName);
-  };
+// for reselecting categories
+for (let i = 0; i < updateCategory.length; i++) {
+  updateCategory[i].addEventListener("click", () => {
+    if (updateActive !== null) {
+      updateActive.style.backgroundColor = "var(--background)";
+    }
+    updateCategory[i].style.backgroundColor = "green";
+    updateActive = updateCategory[i];
+    updatedCategoryName = updateCategory[i].value;
+  });
 }
 
+// when arrow down pressed after reaching 0
+downpress(priceFieldUpdate);
+
+
+
+// setting up the update button functionality
+updateButton.addEventListener("click", () => {
+  if (currentUpdateId !== null) {
+    if(updateItemField.value===itemlist[currentUpdateId].name){
+      alert("same");
+    }
+    else{
+      alert("different");
+    }
+  }
+});
 
 // #################################------------update Modal end-----------#########################
-
 
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
 
@@ -295,8 +312,7 @@ function reset() {
   closemodal(addModal);
 }
 
-
-function slidebutton(slide,actionArea){
+function slidebutton(slide, actionArea) {
   for (let i = 0; i < slide.length; i++) {
     slide[i].addEventListener("click", () => {
       if (slide[i].value === "up") {
@@ -304,7 +320,7 @@ function slidebutton(slide,actionArea){
         newNumber = Number(newNumber);
         newNumber += 0.01;
         actionArea.value = Math.round(newNumber * 100) / 100;
-      } else if(slide[i].value === "down"){
+      } else if (slide[i].value === "down") {
         let newNumber = actionArea.value;
         newNumber = Number(newNumber);
         newNumber -= 0.01;
@@ -316,10 +332,9 @@ function slidebutton(slide,actionArea){
       }
     });
   }
-};
+}
 
-
-function downpress(target){
+function downpress(target) {
   target.addEventListener("keydown", (e) => {
     if (target.value <= 0) {
       if (e.key === "ArrowDown") {
