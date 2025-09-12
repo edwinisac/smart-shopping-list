@@ -50,13 +50,17 @@ close[2].addEventListener("click", () => {
 });
 
 // #################################################################################################################################################
-// variable declaration for update section
+// global variable declaration for update section
 let updateActive = null;
 let updatedCategoryName = null;
 let currentUpdateId = null;
 // global selectors for update modal
 let updateCategory = document.querySelectorAll(".updatebuttons");
 let updateItemField = document.querySelector(".itemupdate");
+let updatePriceField = document.querySelector(".priceupdate");
+// global variable declaration for delete section
+let currentDeleteId=null;
+
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
 
 let itemname = "";
@@ -170,6 +174,7 @@ addButton.addEventListener("click", () => {
     let customCheckbox = li.querySelector(".custom_checkbox");
     let text = li.querySelector(".item_name");
     let updateModalOpen = li.querySelector(`.update`);
+    let deleteModalOpen=li.querySelector(".delete");
 
     checkbox.addEventListener("change", (e) => {
       let checkId = e.currentTarget.dataset.checkid;
@@ -195,7 +200,7 @@ addButton.addEventListener("click", () => {
 
       // let updateItemField = document.querySelector(".itemupdate");
       // let updateCategory = document.querySelectorAll(".updatebuttons");      --declared globally
-      let updatePriceField = document.querySelector(".priceupdate");
+      // let updatePriceField = document.querySelector(".priceupdate");
 
       // displaying product name
       updateItemField.value = itemlist[id].name;
@@ -215,6 +220,15 @@ addButton.addEventListener("click", () => {
       currentUpdateId = Number(id);
     });
 
+
+
+    // to open delete modal
+    deleteModalOpen.addEventListener("click",(e)=>{
+      deleteid=e.currentTarget.dataset.id;
+      openmodal(main,deleteModal,"flex");
+      currentDeleteId=Number(deleteid);
+    })
+
     displayList.appendChild(li);
   }
 
@@ -227,9 +241,9 @@ addButton.addEventListener("click", () => {
 
 // setting the slide buttons
 let slideButtonUpdate = document.querySelectorAll(".slideButtonUpdate");
-let priceFieldUpdate = document.querySelector(".priceupdate");
+// let priceFieldUpdate = document.querySelector(".priceupdate");
 let updateButton = document.querySelector("#updatebt");
-slidebutton(slideButtonUpdate, priceFieldUpdate);
+slidebutton(slideButtonUpdate, updatePriceField);
 
 // for reselecting categories
 for (let i = 0; i < updateCategory.length; i++) {
@@ -244,23 +258,55 @@ for (let i = 0; i < updateCategory.length; i++) {
 }
 
 // when arrow down pressed after reaching 0
-downpress(priceFieldUpdate);
+downpress(updatePriceField);
 
 
 
 // setting up the update button functionality
 updateButton.addEventListener("click", () => {
   if (currentUpdateId !== null) {
-    if(updateItemField.value===itemlist[currentUpdateId].name){
-      alert("same");
+    // updating product name
+    if(updateItemField.value!==itemlist[currentUpdateId].name){
+      itemlist[currentUpdateId].name=updateItemField.value;
+      document.querySelector(`#product-${currentUpdateId} .item_name`).textContent=itemlist[currentUpdateId].name;
     }
-    else{
-      alert("different");
+    // updating product category
+    if(updatedCategoryName!==itemlist[currentUpdateId].category){
+      itemlist[currentUpdateId].category=updatedCategoryName;
     }
+    // updating product price
+    if(updatePriceField.value!==itemlist[currentUpdateId].price){
+      itemlist[currentUpdateId].price=updatePriceField.value;
+      document.querySelector(`#product-${currentUpdateId} .item_price`).innerHTML=`<span style="color: goldenrod;">₹</span> ${itemlist[currentUpdateId].price}`
+    }
+    closemodal(updateModal);
+
   }
 });
 
 // #################################------------update Modal end-----------#########################
+
+
+
+// #################################----------Delete Modal start---------------################################################
+let confirmBt=document.querySelector(".proceed");
+let cancelBt=document.querySelector(".cancel");
+
+confirmBt.addEventListener("click",()=>{
+  alert(`delete ${itemlist[currentDeleteId].name}`);
+})
+
+
+
+
+
+
+
+
+
+
+// #################################----------Delete Modal end---------------################################################
+
 
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
 
