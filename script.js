@@ -232,7 +232,7 @@ addButton.addEventListener("click", () => {
     displayList.appendChild(li);
   }
 
-  console.log(itemlist);
+  // console.log(itemlist);
 });
 
 //###########################################################################---- ADD MODAL END ---###############################################################
@@ -291,9 +291,17 @@ updateButton.addEventListener("click", () => {
 // #################################----------Delete Modal start---------------################################################
 let confirmBt=document.querySelector(".proceed");
 let cancelBt=document.querySelector(".cancel");
-
+// when confirm clicked
 confirmBt.addEventListener("click",()=>{
-  alert(`delete ${itemlist[currentDeleteId].name}`);
+  document.getElementById(`product-${currentDeleteId}`).remove();
+  itemlist.splice(currentDeleteId,1);
+  closemodal(deleteModal);
+  console.log(itemlist);
+  // some issues here
+})
+// when delete clicked
+cancelBt.addEventListener("click",()=>{
+  closemodal(deleteModal);
 })
 
 
