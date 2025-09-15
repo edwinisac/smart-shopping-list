@@ -69,6 +69,7 @@ let active = null;
 let itemPrice = 0;
 let itemlist = [];
 let uniqueId = 0;
+let specificId=null;
 
 // to select categories
 for (let i = 0; i < categories.length; i++) {
@@ -147,7 +148,8 @@ addButton.addEventListener("click", () => {
   ) {
     itemname = itemField.value;
     itemPrice = priceField.value;
-    itemlist.push(new itemCreate(itemname, categoryname, itemPrice));
+    specificId=Date.now().toString(36)+Math.random().toString(36).substring(2,9);
+    itemlist.push(new itemCreate(itemname, categoryname, itemPrice,specificId));
     // reset the fields only if all the details are submitted
     reset();
 
@@ -156,16 +158,28 @@ addButton.addEventListener("click", () => {
     // track of array length for unique ids
     uniqueId = itemlist.length - 1;
 
+    // let li = document.createElement("li");
+    // li.id = `product-${uniqueId}`;
+    // li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${uniqueId}" data-checkid="${uniqueId}" />
+    //               <label for="item-${uniqueId}" class="custom_checkbox">
+    //               <i class="fa-solid fa-check"></i>
+    //               </label>
+    //               <label for="item-${uniqueId}" class="item_name">${itemlist[uniqueId].name}</label>
+    //               <label for="item-${uniqueId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
+    //               <button class="update" id="updateid-${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
+    //               <button class="delete" id="deleteid=${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
+
     let li = document.createElement("li");
-    li.id = `product-${uniqueId}`;
-    li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${uniqueId}" data-checkid="${uniqueId}" />
-                  <label for="item-${uniqueId}" class="custom_checkbox">
+    li.id = `product-${specificId}`;
+    li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${specificId}" data-checkid="${uniqueId}" />
+                  <label for="item-${specificId}" class="custom_checkbox">
                   <i class="fa-solid fa-check"></i>
                   </label>
-                  <label for="item-${uniqueId}" class="item_name">${itemlist[uniqueId].name}</label>
-                  <label for="item-${uniqueId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
-                  <button class="update" id="updateid-${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
-                  <button class="delete" id="deleteid=${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
+                  <label for="item-${specificId}" class="item_name">${itemlist[uniqueId].name}</label>
+                  <label for="item-${specificId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
+                  <button class="update" id="updateid-${specificId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
+                  <button class="delete" id="deleteid=${specificId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
+
 
     // data-Id = uniqueID - to keep track of the id of the buttons to know which one is presses, can be accessed with dataset
 
@@ -268,7 +282,7 @@ updateButton.addEventListener("click", () => {
     // updating product name
     if(updateItemField.value!==itemlist[currentUpdateId].name){
       itemlist[currentUpdateId].name=updateItemField.value;
-      document.querySelector(`#product-${currentUpdateId} .item_name`).textContent=itemlist[currentUpdateId].name;
+      document.querySelector(`#product-${itemlist[currentUpdateId].specificId} .item_name`).textContent=itemlist[currentUpdateId].name;
     }
     // updating product category
     if(updatedCategoryName!==itemlist[currentUpdateId].category){
@@ -277,7 +291,7 @@ updateButton.addEventListener("click", () => {
     // updating product price
     if(updatePriceField.value!==itemlist[currentUpdateId].price){
       itemlist[currentUpdateId].price=updatePriceField.value;
-      document.querySelector(`#product-${currentUpdateId} .item_price`).innerHTML=`<span style="color: goldenrod;">₹</span> ${itemlist[currentUpdateId].price}`
+      document.querySelector(`#product-${itemlist[currentUpdateId].specificId} .item_price`).innerHTML=`<span style="color: goldenrod;">₹</span> ${itemlist[currentUpdateId].price}`
     }
     closemodal(updateModal);
 
@@ -293,13 +307,13 @@ let confirmBt=document.querySelector(".proceed");
 let cancelBt=document.querySelector(".cancel");
 // when confirm clicked
 confirmBt.addEventListener("click",()=>{
-  document.getElementById(`product-${currentDeleteId}`).remove();
+  document.getElementById(`product-${itemlist[currentDeleteId].specificId}`).remove();
   itemlist.splice(currentDeleteId,1);
   closemodal(deleteModal);
   console.log(itemlist);
   // some issues here
 })
-// when delete clicked
+// when cancel clicked
 cancelBt.addEventListener("click",()=>{
   closemodal(deleteModal);
 })
@@ -342,10 +356,11 @@ function blinkAnimation(target, animation) {
 // object creation
 
 class itemCreate {
-  constructor(name, category, price) {
+  constructor(name, category, price,specificId) {
     this.name = name;
     this.category = category;
     this.price = price;
+    this.specificId=specificId;
     this.status = false;
   }
 }
