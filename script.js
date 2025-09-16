@@ -156,7 +156,7 @@ addButton.addEventListener("click", () => {
     // ----------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------
 
     // track of array length for unique ids
-    uniqueId = itemlist.length - 1;
+    // uniqueId = itemlist.length - 1;
 
     // let li = document.createElement("li");
     // li.id = `product-${uniqueId}`;
@@ -168,17 +168,16 @@ addButton.addEventListener("click", () => {
     //               <label for="item-${uniqueId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
     //               <button class="update" id="updateid-${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
     //               <button class="delete" id="deleteid=${uniqueId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
-
     let li = document.createElement("li");
     li.id = `product-${specificId}`;
-    li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${specificId}" data-checkid="${uniqueId}" />
+    li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${specificId}" data-checkid="${specificId}" />
                   <label for="item-${specificId}" class="custom_checkbox">
                   <i class="fa-solid fa-check"></i>
                   </label>
-                  <label for="item-${specificId}" class="item_name">${itemlist[uniqueId].name}</label>
-                  <label for="item-${specificId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist[uniqueId].price}</label>
-                  <button class="update" id="updateid-${specificId}" data-Id="${uniqueId}"><i class="fa-solid fa-pen"></i></button>
-                  <button class="delete" id="deleteid=${specificId}" data-Id="${uniqueId}"><i class="fa-solid fa-trash"></i></button> `;
+                  <label for="item-${specificId}" class="item_name">${itemlist.find(object=>object.id===specificId).name}</label>
+                  <label for="item-${specificId}" class="item_price"><span style="color: goldenrod;">₹</span> ${itemlist.find(object=>object.id===specificId).price}</label>
+                  <button class="update" id="updateid-${specificId}" data-Id="${specificId}"><i class="fa-solid fa-pen"></i></button>
+                  <button class="delete" id="deleteid=${specificId}" data-Id="${specificId}"><i class="fa-solid fa-trash"></i></button> `;
 
 
     // data-Id = uniqueID - to keep track of the id of the buttons to know which one is presses, can be accessed with dataset
@@ -195,11 +194,11 @@ addButton.addEventListener("click", () => {
       if (checkbox.checked) {
         customCheckbox.classList.add("check_toggle");
         // also pass a flag or status and modify the object
-        itemlist[checkId].status = true; //checked
+        itemlist.find(obj=>obj.id===checkId).status = true; //checked
         text.classList.add("item_name_check");
       } else {
         customCheckbox.classList.remove("check_toggle");
-        itemlist[checkId].status = false; //not checked
+        itemlist.find(obj=>obj.id===checkId).status = false; //not checked
         text.classList.remove("item_name_check");
       }
     });
@@ -217,11 +216,12 @@ addButton.addEventListener("click", () => {
       // let updatePriceField = document.querySelector(".priceupdate");
 
       // displaying product name
-      updateItemField.value = itemlist[id].name;
+      let item=itemlist.find(obj=>obj.id===id);
+      updateItemField.value = item.name;
 
       // for displaying the selected category
       for (let i = 0; i < updateCategory.length; i++) {
-        if (updateCategory[i].value === itemlist[id].category) {
+        if (updateCategory[i].value === item.category) {
           updateCategory[i].style.backgroundColor = "green";
           updateActive = updateCategory[i];
           updatedCategoryName = updateCategory[i].value;
@@ -230,8 +230,8 @@ addButton.addEventListener("click", () => {
         }
       }
       // displaying product price
-      updatePriceField.value = itemlist[id].price;
-      currentUpdateId = Number(id);
+      updatePriceField.value = item.price;
+      currentUpdateId = id;
     });
 
 
@@ -240,10 +240,12 @@ addButton.addEventListener("click", () => {
     deleteModalOpen.addEventListener("click",(e)=>{
       deleteid=e.currentTarget.dataset.id;
       openmodal(main,deleteModal,"flex");
-      currentDeleteId=Number(deleteid);
+      currentDeleteId=deleteid;
     })
 
     displayList.appendChild(li);
+    pricedisplay();
+
   }
 
   // console.log(itemlist);
@@ -280,21 +282,22 @@ downpress(updatePriceField);
 updateButton.addEventListener("click", () => {
   if (currentUpdateId !== null) {
     // updating product name
-    if(updateItemField.value!==itemlist[currentUpdateId].name){
-      itemlist[currentUpdateId].name=updateItemField.value;
-      document.querySelector(`#product-${itemlist[currentUpdateId].specificId} .item_name`).textContent=itemlist[currentUpdateId].name;
+    let short=itemlist.find(obj=>obj.id===currentUpdateId); //selecting the corresponding object
+    if(updateItemField.value!==short.name){
+      short.name=updateItemField.value;
+      document.querySelector(`#product-${currentUpdateId} .item_name`).textContent=short.name;
     }
     // updating product category
-    if(updatedCategoryName!==itemlist[currentUpdateId].category){
-      itemlist[currentUpdateId].category=updatedCategoryName;
+    if(updatedCategoryName!==short.category){
+      short.category=updatedCategoryName;
     }
     // updating product price
-    if(updatePriceField.value!==itemlist[currentUpdateId].price){
-      itemlist[currentUpdateId].price=updatePriceField.value;
-      document.querySelector(`#product-${itemlist[currentUpdateId].specificId} .item_price`).innerHTML=`<span style="color: goldenrod;">₹</span> ${itemlist[currentUpdateId].price}`
+    if(updatePriceField.value!==short.price){
+      short.price=updatePriceField.value;
+      document.querySelector(`#product-${currentUpdateId} .item_price`).innerHTML=`<span style="color: goldenrod;">₹</span> ${short.price}`
     }
     closemodal(updateModal);
-
+    pricedisplay();
   }
 });
 
@@ -307,11 +310,14 @@ let confirmBt=document.querySelector(".proceed");
 let cancelBt=document.querySelector(".cancel");
 // when confirm clicked
 confirmBt.addEventListener("click",()=>{
-  document.getElementById(`product-${itemlist[currentDeleteId].specificId}`).remove();
-  itemlist.splice(currentDeleteId,1);
-  closemodal(deleteModal);
-  console.log(itemlist);
-  // some issues here
+  document.getElementById(`product-${currentDeleteId}`).remove();
+  let index=itemlist.findIndex(obj=>obj.id===currentDeleteId);
+  if(index!==-1){
+    itemlist.splice(index,1);
+    closemodal(deleteModal);
+    pricedisplay();
+  }
+
 })
 // when cancel clicked
 cancelBt.addEventListener("click",()=>{
@@ -319,16 +325,14 @@ cancelBt.addEventListener("click",()=>{
 })
 
 
-
-
-
-
-
-
-
-
 // #################################----------Delete Modal end---------------################################################
 
+
+// ############################---------------total price-----------#########################################
+
+let totalPrice=document.querySelector(".total_price");
+
+// #########################################################################################################
 
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
 
@@ -360,7 +364,7 @@ class itemCreate {
     this.name = name;
     this.category = category;
     this.price = price;
-    this.specificId=specificId;
+    this.id=specificId;
     this.status = false;
   }
 }
@@ -412,3 +416,21 @@ function downpress(target) {
     }
   });
 }
+
+
+// to display total price
+
+function pricedisplay(){
+  let totalLength=itemlist.length;
+ let total=0;
+ if(totalLength!==0){
+  for(let i=0;i<totalLength;i++){
+    let currentPrice=Number(itemlist[i].price);
+      total+=currentPrice;  
+  }
+  totalPrice.textContent=total;
+}else{
+  totalPrice.textContent=0;
+}
+}
+
