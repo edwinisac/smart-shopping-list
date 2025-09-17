@@ -17,7 +17,7 @@ body {
   height: 100vh;
 }
 #maincontainer{
-  display: none;
+  /* display: none; */
   display: block;
   /* display:none   -- for making the main container invisible */
 }
@@ -40,26 +40,30 @@ body {
 .menu {
   background-color: var(--background);
   padding: 10px 60px;
-  max-width: 60%;
+  width: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 70px;
   border: 1px solid white;
   border-radius: 10px;
   margin:0px;
+  /* position: fixed; */
+  height: 4vh;
 }
+
 .icon {
   color: var(--icons);
   font-size: 25px;
   cursor: pointer;
 }
 .icon:hover {
-  color: #00ffff;
+  font-size:35px;
+  
 }
 /* color when an icon is pressed */
-.clicked {
-  /* color:darkgoldenrod; */
+.clicked-active{
+  color: #00ffff;
 }
 .list {
   width: 100%;
@@ -202,8 +206,12 @@ li {
   }
   .menu {
     margin-top: 5px;
-    width: 100%;
+    width:60%;
     gap: 30px;
+    padding:10px 70px;
+  }
+  .icon:hover{
+    font-size:25px;
   }
   li{
     max-width:400px;

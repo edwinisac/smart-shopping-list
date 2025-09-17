@@ -334,6 +334,36 @@ let totalPrice=document.querySelector(".total_price");
 
 // #########################################################################################################
 
+// #########################----------other features--------------###########################################################################################
+let groups=document.querySelectorAll(".clicked");
+let track=null;
+groups.forEach(set => {
+  set.addEventListener("click",()=>{
+    
+    let selected=set.dataset.value;
+    set.classList.toggle("clicked-active");
+    if(set.classList.contains("clicked-active")){
+      track=selected;
+    }  
+    else{
+      track=null;
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  })
+});
+
+
+// #########################----------other features end --------------#######################################################################################
+
+
 // ----------------------------------------------------------------------------- FUNCTIONS-------------------------------------------------------------------
 
 // function for showing a modal
