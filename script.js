@@ -156,6 +156,8 @@ addButton.addEventListener("click", () => {
     // reset the fields only if all the details are submitted
     reset();
 
+    localStorage.setItem("shoppingList",JSON.stringify(itemlist));     // updating  local storage
+
     // ----------------------------DISPLAYING ITEMS ON MAIN PAGE-------------------
 
     // track of array length for unique ids
@@ -304,6 +306,9 @@ updateButton.addEventListener("click", () => {
     }
     closemodal(updateModal);
     pricedisplay();
+
+    localStorage.setItem("shoppingList",JSON.stringify(itemlist));     // updating  local storage
+
   }
 });
 
@@ -320,6 +325,7 @@ confirmBt.addEventListener("click", () => {
     itemlist.splice(index, 1);
     closemodal(deleteModal);
     pricedisplay();
+    localStorage.setItem("shoppingList",JSON.stringify(itemlist));
   }
 });
 // when cancel clicked
@@ -478,3 +484,6 @@ function pricedisplay() {
     totalPrice.textContent = 0;
   }
 }
+
+
+
