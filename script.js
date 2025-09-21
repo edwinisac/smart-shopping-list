@@ -1,3 +1,83 @@
+// ul section to display list items
+
+let displayList = document.querySelector(".list");
+
+
+let itemlist =null;
+
+// global variable declaration for update section
+let updateActive = null;
+let updatedCategoryName = null;
+let currentUpdateId = null;
+// global selectors for update modal
+let updateCategory = document.querySelectorAll(".updatebuttons");
+let updateItemField = document.querySelector(".itemupdate");
+let updatePriceField = document.querySelector(".priceupdate");
+// global variable declaration for delete section
+let currentDeleteId = null;
+// global selector for total price
+let totalPrice = document.querySelector(".total_price");
+
+
+
+// loading data from local storage
+let storedData=localStorage.getItem("shoppingList");
+if(storedData!==null){
+  itemlist=JSON.parse(storedData);
+  for(let i=0;i<itemlist.length;i++){
+    let savedId=itemlist[i].id;
+    let li= document.createElement("li");
+    li.className="item_list";
+    li.id=`product-${savedId}`;
+    li.innerHTML = `<input type="checkbox" class="checkbox" id="item-${savedId}" data-checkid="${savedId}" />
+    <label for="item-${savedId}" class="custom_checkbox">
+    <i class="fa-solid fa-check"></i>
+    </label>
+    <label for="item-${savedId}" class="item_name">${
+itemlist[i].name
+}</label>
+    <label for="item-${savedId}" class="item_price"><span style="color: goldenrod;">₹</span> ${
+      itemlist[i].price
+}</label>
+    <button class="update" id="updateid-${savedId}" data-Id="${savedId}"><i class="fa-solid fa-pen"></i></button>
+    <button class="delete" id="deleteid=${savedId}" data-Id="${savedId}"><i class="fa-solid fa-trash"></i></button> `;
+
+
+    let checkbox = li.querySelector(".checkbox");
+    let customCheckbox = li.querySelector(".custom_checkbox");
+    let text = li.querySelector(".item_name");
+    let updateModalOpen = li.querySelector(`.update`);
+    let deleteModalOpen = li.querySelector(".delete");
+
+    checkbox.addEventListener("change",(e)=>{
+      verifyCheck(checkbox,customCheckbox,e,text);
+    });
+
+    updateModalOpen.addEventListener("click", (e) => {
+      openUpdate(e);
+    });
+
+    deleteModalOpen.addEventListener("click", (e) => {
+      openDelete(e);
+    });
+
+
+
+
+
+  displayList.appendChild(li);
+
+  }
+  pricedisplay();
+}
+else{
+  itemlist=[];
+}
+
+
+
+
+// ################################################################################################
 // buttons for modal opening
 let addbt = document.querySelector(".fa-add");
 // let updatebt = document.querySelectorAll(".update");
@@ -17,9 +97,7 @@ let itemField = document.querySelector(".itemadd");
 let addButton = document.querySelector("#addbt");
 let categories = document.querySelectorAll(".addbuttons");
 
-// all items of main page
 
-let displayList = document.querySelector(".list");
 
 // -----------------------------------------------
 
@@ -50,16 +128,16 @@ close[2].addEventListener("click", () => {
 });
 
 // #################################################################################################################################################
-// global variable declaration for update section
-let updateActive = null;
-let updatedCategoryName = null;
-let currentUpdateId = null;
-// global selectors for update modal
-let updateCategory = document.querySelectorAll(".updatebuttons");
-let updateItemField = document.querySelector(".itemupdate");
-let updatePriceField = document.querySelector(".priceupdate");
-// global variable declaration for delete section
-let currentDeleteId = null;
+// // global variable declaration for update section
+// let updateActive = null;
+// let updatedCategoryName = null;
+// let currentUpdateId = null;
+// // global selectors for update modal
+// let updateCategory = document.querySelectorAll(".updatebuttons");
+// let updateItemField = document.querySelector(".itemupdate");
+// let updatePriceField = document.querySelector(".priceupdate");
+// // global variable declaration for delete section
+// let currentDeleteId = null;
 
 // -------------------------------------------------------- ADD MODAL ------------------------------------------------------------------------------
 
@@ -67,7 +145,6 @@ let itemname = "";
 let categoryname = null;
 let active = null;
 let itemPrice = 0;
-let itemlist = [];
 let uniqueId = 0;
 let specificId = null;
 
@@ -199,55 +276,60 @@ addButton.addEventListener("click", () => {
     let deleteModalOpen = li.querySelector(".delete");
 
     checkbox.addEventListener("change", (e) => {
-      let checkId = e.currentTarget.dataset.checkid;
-      if (checkbox.checked) {
-        customCheckbox.classList.add("check_toggle");
-        // also pass a flag or status and modify the object
-        itemlist.find((obj) => obj.id === checkId).status = true; //checked
-        text.classList.add("item_name_check");
-      } else {
-        customCheckbox.classList.remove("check_toggle");
-        itemlist.find((obj) => obj.id === checkId).status = false; //not checked
-        text.classList.remove("item_name_check");
-      }
+      // let checkId = e.currentTarget.dataset.checkid;
+      // if (checkbox.checked) {
+      //   customCheckbox.classList.add("check_toggle");
+      //   // also pass a flag or status and modify the object
+      //   itemlist.find((obj) => obj.id === checkId).status = true; //checked
+      //   text.classList.add("item_name_check");
+      // } else {
+      //   customCheckbox.classList.remove("check_toggle");
+      //   itemlist.find((obj) => obj.id === checkId).status = false; //not checked
+      //   text.classList.remove("item_name_check");
+      // }
+      verifyCheck(checkbox,customCheckbox,e,text);
+
     });
+
     // to open update modal
     updateModalOpen.addEventListener("click", (e) => {
-      openmodal(main, updateModal, "block");
+      // openmodal(main, updateModal, "block");
 
-      // ############################-----update modal when pen icon clicked------------##############################
+      // // ############################-----update modal when pen icon clicked------------##############################
 
-      let id = e.currentTarget.dataset.id;
-      // using dataset to confirm which update button is pressed will give the id saved to the current target button
+      // let id = e.currentTarget.dataset.id;
+      // // using dataset to confirm which update button is pressed will give the id saved to the current target button
 
-      // let updateItemField = document.querySelector(".itemupdate");
-      // let updateCategory = document.querySelectorAll(".updatebuttons");      --declared globally
-      // let updatePriceField = document.querySelector(".priceupdate");
+      // // let updateItemField = document.querySelector(".itemupdate");
+      // // let updateCategory = document.querySelectorAll(".updatebuttons");      --declared globally
+      // // let updatePriceField = document.querySelector(".priceupdate");
 
-      // displaying product name
-      let item = itemlist.find((obj) => obj.id === id);
-      updateItemField.value = item.name;
+      // // displaying product name
+      // let item = itemlist.find((obj) => obj.id === id);
+      // updateItemField.value = item.name;
 
-      // for displaying the selected category
-      for (let i = 0; i < updateCategory.length; i++) {
-        if (updateCategory[i].value === item.category) {
-          updateCategory[i].style.backgroundColor = "green";
-          updateActive = updateCategory[i];
-          updatedCategoryName = updateCategory[i].value;
-        } else {
-          updateCategory[i].style.backgroundColor = "var(--background)";
-        }
-      }
-      // displaying product price
-      updatePriceField.value = item.price;
-      currentUpdateId = id;
+      // // for displaying the selected category
+      // for (let i = 0; i < updateCategory.length; i++) {
+      //   if (updateCategory[i].value === item.category) {
+      //     updateCategory[i].style.backgroundColor = "green";
+      //     updateActive = updateCategory[i];
+      //     updatedCategoryName = updateCategory[i].value;
+      //   } else {
+      //     updateCategory[i].style.backgroundColor = "var(--background)";
+      //   }
+      // }
+      // // displaying product price
+      // updatePriceField.value = item.price;
+      // currentUpdateId = id;
+      openUpdate(e);
     });
 
     // to open delete modal
     deleteModalOpen.addEventListener("click", (e) => {
-      deleteid = e.currentTarget.dataset.id;
-      openmodal(main, deleteModal, "flex");
-      currentDeleteId = deleteid;
+      // deleteid = e.currentTarget.dataset.id;
+      // openmodal(main, deleteModal, "flex");
+      // currentDeleteId = deleteid;
+      openDelete(e);
     });
 
     displayList.appendChild(li);
@@ -304,10 +386,11 @@ updateButton.addEventListener("click", () => {
         `#product-${currentUpdateId} .item_price`
       ).innerHTML = `<span style="color: goldenrod;">₹</span> ${short.price}`;
     }
-    closemodal(updateModal);
+    currentUpdateId=null;
     pricedisplay();
-
     localStorage.setItem("shoppingList",JSON.stringify(itemlist));     // updating  local storage
+    closemodal(updateModal);
+
 
   }
 });
@@ -323,13 +406,15 @@ confirmBt.addEventListener("click", () => {
   let index = itemlist.findIndex((obj) => obj.id === currentDeleteId);
   if (index !== -1) {
     itemlist.splice(index, 1);
-    closemodal(deleteModal);
+    currentDeleteId=null;
     pricedisplay();
     localStorage.setItem("shoppingList",JSON.stringify(itemlist));
+    closemodal(deleteModal);
   }
 });
 // when cancel clicked
 cancelBt.addEventListener("click", () => {
+  currentDeleteId=null;
   closemodal(deleteModal);
 });
 
@@ -337,7 +422,6 @@ cancelBt.addEventListener("click", () => {
 
 // ############################---------------total price-----------#########################################
 
-let totalPrice = document.querySelector(".total_price");
 
 // #########################################################################################################
 
@@ -380,7 +464,7 @@ groups.forEach((set) => {
       });
     }
 
-    console.log(selected);
+    // console.log(selected);
   });
 });
 
@@ -487,3 +571,60 @@ function pricedisplay() {
 
 
 
+// to change the checked or not checked state
+
+function verifyCheck(checkbox,customCheckbox,e,text){
+    let checkId = e.currentTarget.dataset.checkid;
+    if (checkbox.checked) {
+      customCheckbox.classList.add("check_toggle");
+      // also pass a flag or status and modify the object
+      itemlist.find((obj) => obj.id === checkId).status = true; //checked
+      text.classList.add("item_name_check");
+    } else {
+      customCheckbox.classList.remove("check_toggle");
+      itemlist.find((obj) => obj.id === checkId).status = false; //not checked
+      text.classList.remove("item_name_check");
+    }
+  
+}
+
+// to open update modal 
+
+function openUpdate(e){
+  openmodal(main, updateModal, "block");
+
+  // ############################-----update modal when pen icon clicked------------##############################
+
+  let id = e.currentTarget.dataset.id;
+  // using dataset to confirm which update button is pressed will give the id saved to the current target button
+
+  // let updateItemField = document.querySelector(".itemupdate");
+  // let updateCategory = document.querySelectorAll(".updatebuttons");      --declared globally
+  // let updatePriceField = document.querySelector(".priceupdate");
+
+  // displaying product name
+  let item = itemlist.find((obj) => obj.id === id);
+  updateItemField.value = item.name;
+
+  // for displaying the selected category
+  for (let i = 0; i < updateCategory.length; i++) {
+    if (updateCategory[i].value === item.category) {
+      updateCategory[i].style.backgroundColor = "green";
+      updateActive = updateCategory[i];
+      updatedCategoryName = updateCategory[i].value;
+    } else {
+      updateCategory[i].style.backgroundColor = "var(--background)";
+    }
+  }
+  // displaying product price
+  updatePriceField.value = item.price;
+  currentUpdateId = id;
+}
+
+// to open delete modal
+
+function openDelete(e){
+  deleteid = e.currentTarget.dataset.id;
+  openmodal(main, deleteModal, "flex");
+  currentDeleteId = deleteid;
+}
