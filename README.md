@@ -17,7 +17,7 @@ Built with **HTML**, **CSS**, and **JavaScript**.
 ## 📸 Screenshots
 
 ### Main View
-![App Screenshot](<img width="1917" height="892" alt="Image" src="https://github.com/user-attachments/assets/6bb2bac2-e777-414a-8bc5-9bccf4b53188" />)
+![App Screenshot](https://github.com/edwinisac/smart-shopping-list/issues/1#issue-3438331194)
 
 ### Mobile View
 <img src="./assets/mobile.png" alt="Mobile Screenshot" width="300">
