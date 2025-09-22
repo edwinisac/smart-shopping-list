@@ -23,10 +23,10 @@ Built with **HTML**, **CSS**, and **JavaScript**.
 ![App(mobile) Screenshot](./assets/main_mobile.png)
 
 
-### Add Product Modal
+### Add Product 
 ![Add Product Screenshot](./assets/create.png)
 
-### Update Product Modal
+### Update Product 
 ![Update Product Screenshot](./assets/update.png)
 
 ### View product according to category
@@ -37,7 +37,7 @@ Built with **HTML**, **CSS**, and **JavaScript**.
 ---
 
 ## 🌐 Live Demo
-👉 [Click here to try it out](https://your-username.github.io/your-repo-name/)  
+👉 [Click here to try it out](https://smart-shopping-list-one.vercel.app/)  
 
 ---
 
