@@ -66,7 +66,10 @@ itemlist[i].name
 
 
   displayList.appendChild(li);
-
+    if(itemlist[i].status===true){
+      customCheckbox.classList.add("check_toggle");
+      text.classList.add("item_name_check");
+    }
   }
   pricedisplay();
 }
@@ -585,6 +588,7 @@ function verifyCheck(checkbox,customCheckbox,e,text){
       itemlist.find((obj) => obj.id === checkId).status = false; //not checked
       text.classList.remove("item_name_check");
     }
+    localStorage.setItem("shoppingList",JSON.stringify(itemlist));
   
 }
 

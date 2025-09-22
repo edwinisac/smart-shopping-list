@@ -17,14 +17,22 @@ Built with **HTML**, **CSS**, and **JavaScript**.
 ## 📸 Screenshots
 
 ### Main View
-![App Screenshot](https://github.com/edwinisac/smart-shopping-list/issues/1#issue-3438331194)
+![App Screenshot](assets/main_desktop.png)
 
 ### Mobile View
-<img src="./assets/mobile.png" alt="Mobile Screenshot" width="300">
+![App(mobile) Screenshot](./assets/main_mobile.png)
 
 
 ### Add Product Modal
-![Add Product Screenshot](./assets/screenshot-add.png)
+![Add Product Screenshot](./assets/create.png)
+
+### Update Product Modal
+![Update Product Screenshot](./assets/update.png)
+
+### View product according to category
+![Category view Screenshot](./assets/category%20.png)
+
+
 
 ---
 
@@ -36,4 +44,4 @@ Built with **HTML**, **CSS**, and **JavaScript**.
 ## 🛠️ Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone git@github.com:edwinisac/smart-shopping-list.git
